@@ -36,7 +36,8 @@ Stream<Map<String, dynamic>> data(
       recordLength = head.getUint16(10, Endian.little),
       fields = <Map<String, dynamic>>[];
 
-  for (var n = 0; body.getUint8(n) != 0x0d; n += 32) {
+  for (var n = 0; n < body.lengthInBytes; n += 32) {
+     if (body.getUint8(n) == 0x0d) break;
     int j;
     for (j = 0; j < 11; ++j) {
       if (body.getUint8(n + j) == 0) break;
